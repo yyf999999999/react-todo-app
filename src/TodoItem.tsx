@@ -21,12 +21,13 @@ const TodoItem = (props: Props) => {
       <div
         className={twMerge(
           "mr - 1.5",
-          currentDate > dayjs(todo.deadline) && !todo.isDone
-            ? "text-red-500"
-            : Math.abs(currentDate.diff(dayjs(todo.deadline), "hour")) <= 24 &&
-                !todo.isDone
-              ? "text-yellow-500"
-              : ""
+          todo.isDone
+            ? "text-blue-500"
+            : currentDate > dayjs(todo.deadline)
+              ? "text-red-500"
+              : Math.abs(currentDate.diff(dayjs(todo.deadline), "hour")) <= 24
+                ? "text-yellow-500"
+                : ""
         )}
       >
         <div>
@@ -34,7 +35,9 @@ const TodoItem = (props: Props) => {
             <input
               type="checkbox"
               checked={todo.isDone}
-              onChange={(e) => props.updateIsDone(todo.id, e.target.checked)}
+              onChange={(e) => {
+                props.updateIsDone(todo.id, e.target.checked);
+              }}
             />
             <span>{todo.name}</span>
           </label>
@@ -42,20 +45,23 @@ const TodoItem = (props: Props) => {
         <div
           className={twMerge(
             "ml-5 space-x-3 text-xs",
-            currentDate > dayjs(todo.deadline) && !todo.isDone
+            todo.isDone
               ? ""
-              : Math.abs(currentDate.diff(dayjs(todo.deadline), "hour")) <=
-                    24 && !todo.isDone
+              : currentDate > dayjs(todo.deadline)
                 ? ""
-                : "text-gray-500"
+                : Math.abs(currentDate.diff(dayjs(todo.deadline), "hour")) <= 24
+                  ? ""
+                  : "text-gray-500"
           )}
         >
           {""}優先度:{" "}
           {"★".repeat(4 - todo.priority) + "　".repeat(todo.priority - 1)} 期日:{" "}
-          {todo.deadline
-            ? dayjs(todo.deadline).format("YYYY-MM-DD HH:mm") +
-              " " +
-              (!todo.isDone
+          {(todo.deadline
+            ? dayjs(todo.deadline).format("YYYY-MM-DD HH:mm")
+            : "期限なし") +
+            " " +
+            (!todo.isDone
+              ? todo.deadline
                 ? currentDate > dayjs(todo.deadline)
                   ? "期限切れ"
                   : "期日まであと" +
@@ -67,20 +73,22 @@ const TodoItem = (props: Props) => {
                       : Math.abs(
                           currentDate.diff(dayjs(todo.deadline), "day")
                         ) + "日")
-                : "提出済み")
-            : "期限なし"}
+                : ""
+              : todo.delay
+                ? "遅れて提出済み"
+                : "提出済み")}
         </div>
       </div>
       <div className="space-x-2">
         <button
           onClick={() => props.remove(todo.id)}
-          className="rounded-md bg-slate-200 px-2 py-1 text-sm font-bold text-white hover:bg-red-500"
+          className="rounded-md bg-red-500 px-2 py-1 text-sm font-bold text-white hover:bg-red-600"
         >
           削除
         </button>
         <button
           onClick={() => props.edit(todo.id)}
-          className="rounded-md bg-green-500 px-2 py-1 text-sm font-bold text-white hover:bg-green-500"
+          className="rounded-md bg-green-500 px-2 py-1 text-sm font-bold text-white hover:bg-green-600"
         >
           編集
         </button>

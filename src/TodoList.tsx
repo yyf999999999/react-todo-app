@@ -7,11 +7,31 @@ type Props = {
   updateIsDone: (id: string, value: boolean) => void;
   remove: (id: string) => void; // ◀◀ 追加
   edit: (id: string) => void;
+  condition: (todo: Todo) => boolean;
+  isAscend: boolean;
+  sortType: string;
 };
 
 const TodoList = (props: Props) => {
   //const todos = [...props.todos].sort((a, b) => a.priority - b.priority);
-  const todos = props.todos;
+  const filteredTodos = props.todos.filter(props.condition);
+  let sortedTodos = filteredTodos;
+  if (props.sortType !== "none") {
+    if (props.sortType === "deadline") {
+      sortedTodos = [...filteredTodos].sort((a, b) => {
+        if (a.deadline === null && b.deadline === null) return 0;
+        if (a.deadline === null) return 1;
+        if (b.deadline === null) return -1;
+        return a.deadline.getTime() - b.deadline.getTime();
+      });
+    } else {
+      sortedTodos = [...filteredTodos].sort((a, b) => a.priority - b.priority);
+    }
+  }
+  let todos = sortedTodos;
+  if (props.isAscend) {
+    todos = sortedTodos.reverse();
+  }
 
   if (todos.length === 0) {
     return (
