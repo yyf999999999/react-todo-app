@@ -175,7 +175,7 @@ const App = () => {
       <div className="mb-2 flex items-center gap-x-4">
         <div className="text-xl font-bold">ソート</div>
         <div className="flex gap-x-2">
-          <label className="flex cursor-pointer items-center space-x-1">
+          <label className="flex cursor-pointer items-center space-x-1 hover:font-bold">
             <input
               type="radio"
               checked={isAscend}
@@ -187,7 +187,7 @@ const App = () => {
             />
             <span>昇順</span>
           </label>
-          <label className="flex cursor-pointer items-center space-x-1">
+          <label className="flex cursor-pointer items-center space-x-1 hover:font-bold">
             <input
               type="radio"
               checked={!isAscend}
@@ -202,7 +202,7 @@ const App = () => {
         </div>
         <div className="relative">
           <button
-            className="w-28 border border-gray-300 bg-white px-2 py-1 text-left text-sm"
+            className="w-28 border border-gray-300 bg-white px-2 py-1 text-left text-sm hover:border-gray-400"
             onClick={() => {
               setDropDown(!dropDown);
             }}
@@ -255,7 +255,8 @@ const App = () => {
           onClick={() => changeTodosType("all", (todo) => true)}
           className={twMerge(
             "flex-1 border-b-2 border-r-2 p-2 text-center text-xl text-gray-300 font-bold",
-            todosType === "all" && "text-black border-black"
+            todosType === "all" && "text-black border-black",
+            todosType !== "all" && "hover:border-gray-400 hover:text-gray-400"
           )}
         >
           全て
@@ -265,7 +266,9 @@ const App = () => {
           onClick={() => changeTodosType("working", (todo) => !todo.isDone)}
           className={twMerge(
             "flex-1 border-x-2 border-b-2 p-2 text-center text-xl text-gray-300 font-bold",
-            todosType === "working" && "text-black border-black"
+            todosType === "working" && "text-black border-black ",
+            todosType !== "working" &&
+              "hover:border-gray-400 hover:text-gray-400"
           )}
         >
           取り組み中のみ
@@ -275,7 +278,9 @@ const App = () => {
           onClick={() => changeTodosType("submitted", (todo) => todo.isDone)}
           className={twMerge(
             "flex-1 border-b-2 border-l-2 p-2 text-center text-xl text-gray-300 font-bold",
-            todosType === "submitted" && "text-black border-black"
+            todosType === "submitted" && "text-black border-black",
+            todosType !== "submitted" &&
+              "hover:border-gray-400 hover:text-gray-400"
           )}
         >
           提出済みのみ

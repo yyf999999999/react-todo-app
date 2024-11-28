@@ -31,7 +31,7 @@ const TodoItem = (props: Props) => {
         )}
       >
         <div>
-          <label className="flex cursor-pointer items-center space-x-2">
+          <label className="flex cursor-pointer items-center space-x-2 hover:font-bold">
             <input
               type="checkbox"
               checked={todo.isDone}
