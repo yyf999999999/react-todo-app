@@ -249,7 +249,7 @@ const App = () => {
           )}
         </div>
       </div>
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-2 flex items-stretch justify-between">
         <button
           type="button"
           onClick={() => changeTodosType("all", (todo) => true)}
@@ -271,7 +271,7 @@ const App = () => {
               "hover:border-gray-400 hover:text-gray-400"
           )}
         >
-          取り組み中のみ
+          取り組み中
         </button>
         <button
           type="button"
@@ -283,7 +283,7 @@ const App = () => {
               "hover:border-gray-400 hover:text-gray-400"
           )}
         >
-          提出済みのみ
+          完了済み
         </button>
       </div>
       <TodoList
